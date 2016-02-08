@@ -7,7 +7,6 @@ public class Nodo{
 
 private:
 char caracter_actual;
-char caracter_siguiente;
 char caracter_anterior;
 int id_cadena;
  

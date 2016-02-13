@@ -3,7 +3,7 @@
 #include "Lectura.cpp"
 using namespace std;
 
-int char_a_int(string entrada)
+int matrix::char_a_int(string entrada)
 {
 	if(entrada == "ñ")
 	return 14;
@@ -39,6 +39,21 @@ int char_a_int(string entrada)
 	}
 	
 }
+void matrix::insertar_palabra(std::string palabra, int posicion)
+{
+int  palabra_size;
+std::string caracter ="";
+
+palabra_size = palabra.size();
+for(int i =0; i<palabra_size;i++)
+{
+caracter = caracter += palabra.at(i);
+this->matris[i][matrix::char_a_int(caracter)]->set(88999-posicion,1);//ejemplo de poner naturalmente un set en el bit set
+caracter = "";
+}
+}
+
+
 void matrix::inicializar_matriz()
 {
 	string ceros ="";
@@ -60,16 +75,27 @@ void matrix::inicializar_matriz()
 matrix::matrix()
 {
 }
+void imprimir_matris(std::bitset<89000>*  matris[4][4])
+{
+    for(int i =0; i<4;i++)
+    {
+     for(int j = 0; j < 4; j++)
+     {
+         cout << matris[i][j]->to_string().c_str()<<" ";
+     }
+     cout << endl;
+    }
+}
 int main (int argv, char** args)
 {
 	matrix *matris = new matrix();
 	Lectura *lectura = new Lectura();
 	lectura->Leer("in.txt");
-	printf("%ld\n",lectura->getPalabras().size());
+	
    // char x = 'o';  ejemplo de como se toma ñ
    // string y[0] = x; ejemplo de como se toma ñ
-	//matrix *m = new matrix();
-	char_a_int("ñ");
+
+	
 	bitset <4> bit_prueba(std::string("1111"));
 	bit_prueba.set(bit_prueba.size()-0-4,0);//ejemplo de poner naturalmente un set en el bit set
 	//matris->matris[0][0] = &bit_prueba;
@@ -77,12 +103,22 @@ int main (int argv, char** args)
 
 /* comienza lo serio */
      matris->inicializar_matriz();
-     printf("%s",matris->matris[26][22]->to_string().c_str());
+    printf("%ld\n",lectura->getPalabras().size());
     int palabras_size=lectura->getPalabras().size();
-    for(int i = 0; i < palabras_size;i++)
+    matris->matris[0][0]->set();
+      matris->matris[0][1]->set();
+        clock_t start = clock();
+        int contador = 0;
+    for(int i =0; i< 22;i++)
     {
+		*matris->matris[0][0]=*matris->matris[0][0] & *matris->matris[0][1];
 		
 	}
-	
+	clock_t stop = clock();
+	printf("%s",matris->matris[0][0]->to_string().c_str());
+	printf("%d\n",contador);
+	 
+	 double elapsed = (double)(stop - start) / CLOCKS_PER_SEC;
+    printf("Time elapsed in ms: %f ", elapsed);
 	return 0;
 }

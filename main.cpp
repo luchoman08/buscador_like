@@ -39,6 +39,32 @@ int matrix::char_a_int(string entrada)
 	}
 	
 }
+
+vector <int> matrix::palabras_resultantes(string p_entrada)
+{
+vector <int> palabras_resultantes;
+string caracter_actual="";
+std::bitset<89000>  resultado;	
+resultado.set();
+resultado.set();
+int p_entrada_size = p_entrada.size(), resultado_size = 0;
+for(int i =0; i < p_entrada_size;i++)
+{
+caracter_actual=p_entrada.at(i);	
+resultado&=*matris[i][matrix::char_a_int(caracter_actual)];
+caracter_actual="";
+}
+resultado_size=resultado.size();
+for(int i =0;i<resultado_size;i++)
+{
+	if(resultado[i]==1)
+	{
+		palabras_resultantes.push_back(88999 - i);
+	}
+}
+return palabras_resultantes;
+}
+
 void matrix::insertar_palabra(std::string palabra, int posicion)
 {
 int  palabra_size;
@@ -90,14 +116,16 @@ int main (int argv, char** args)
 {
 	matrix *matris = new matrix();
 	Lectura *lectura = new Lectura();
-	lectura->Leer("in.txt");
+	lectura->Leer("in_short.txt");
 	
    // char x = 'o';  ejemplo de como se toma ñ
    // string y[0] = x; ejemplo de como se toma ñ
 
 	
-	bitset <4> bit_prueba(std::string("1111"));
-	bit_prueba.set(bit_prueba.size()-0-4,0);//ejemplo de poner naturalmente un set en el bit set
+	bitset <4> bit_prueba;
+    bit_prueba&=bit_prueba;
+	bit_prueba.set();
+	bit_prueba.set();
 	//matris->matris[0][0] = &bit_prueba;
 //	printf("%s",matris->matris[0][0]->to_string().c_str());
 
@@ -105,20 +133,27 @@ int main (int argv, char** args)
      matris->inicializar_matriz();
     printf("%ld\n",lectura->getPalabras().size());
     int palabras_size=lectura->getPalabras().size();
-    matris->matris[0][0]->set();
-      matris->matris[0][1]->set();
+
+    
         clock_t start = clock();
         int contador = 0;
-    for(int i =0; i< 22;i++)
+   for(int i =0; i< palabras_size-10;i++)
     {
-		*matris->matris[0][0]=*matris->matris[0][0] & *matris->matris[0][1];
+		matris->insertar_palabra(lectura->getPalabras().at(i), i);
 		
 	}
 	clock_t stop = clock();
-	printf("%s",matris->matris[0][0]->to_string().c_str());
+	//printf("%s",matris->matris[0][0]->to_string().c_str());
+	printf("%s",bit_prueba.to_string().c_str());
 	printf("%d\n",contador);
-	 
+	 vector <int> palabras_resultantes = matris->palabras_resultantes("ab");
+	
 	 double elapsed = (double)(stop - start) / CLOCKS_PER_SEC;
     printf("Time elapsed in ms: %f ", elapsed);
+    for(int i =0; i < palabras_resultantes.size();i++)
+	 {
+		 printf("%s\n",lectura->getPalabras().at(palabras_resultantes.at(i)).c_str());
+		  //printf("%d\n",palabras_resultantes.at(i));
+	 }
 	return 0;
 }

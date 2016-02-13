@@ -2,6 +2,7 @@
 #define matrix_hpp
 #include <bitset>
 #include <string>
+#include <vector>
 class matrix{
 	
 	public :
@@ -11,6 +12,7 @@ class matrix{
     void inicializar_matriz();
     void insertar_palabra(std::string palabra, int posicion);
     int char_a_int(std::string entrada);
+    std::vector <int> palabras_resultantes(std::string p_entrada);
 };
 
 
